@@ -44,21 +44,22 @@ class AddPlaceViewController: UITableViewController, UIImagePickerControllerDele
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         
-        if let name = self.textfieldName.text, let type = self.textfieldType.text, let direction = self.textfieldDirection.text, let telephone = self.textfieldTelephone.text, let website   = self.textfieldWebsite.text, let theImage = self.imageView.image, let rating = self.rating{
+       /* if let name = self.textfieldName.text, let type = self.textfieldType.text, let direction = self.textfieldDirection.text, let telephone = self.textfieldTelephone.text, let website   = self.textfieldWebsite.text, let theImage = self.imageView.image, let rating = self.rating{
             
             self.place = Place(name: name, type: type, location: direction, image: theImage, telephone: telephone, website: website)
             place!.rating = rating
             
             
             print (place!.name)
-            self.performSegue(withIdentifier: "unwindToMainViewController", sender: self)
+            
+         
         }else{
             let alertController = UIAlertController(title: "Falta algún dato", message: "Revisa que lo tengas todo rellenado.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
-        }
-        
+        }*/
+        self.performSegue(withIdentifier: "unwindToMainViewController", sender: self)
     }
     
     @IBAction func ratingPressed(_ sender: AnyObject) {

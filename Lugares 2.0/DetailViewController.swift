@@ -25,7 +25,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.nameLabel.text = self.place.name
-        self.placeImageView.image = self.place.image
+        self.placeImageView.image = UIImage(data: self.place.image as! Data)
     
         self.tableView.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.25)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -36,7 +36,7 @@ class DetailViewController: UIViewController {
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        let image = UIImage(named: self.place.rating)
+        let image = UIImage(named: self.place.rating!)
         self.ratingButton.setImage(image, for: .normal)
     }
     
@@ -53,7 +53,7 @@ class DetailViewController: UIViewController {
         if let reviewVC = segue.source as? ReviewViewController {
             if let rating = reviewVC.ratingSelected{
                 self.place.rating = rating
-                let image = UIImage(named: self.place.rating)
+                let image = UIImage(named: self.place.rating!)
                 self.ratingButton.setImage(image, for: .normal)
             }
     

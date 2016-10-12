@@ -21,7 +21,7 @@ class ViewController: UITableViewController {
         // elimina las rows vacias de abajo cuando acaba la lista
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         // Do any additional setup after loading the view, typically from a nib.
-        var place = Place(name: "AlexanderPlatz", type: "Plaza", location: "Alexanderstraße 4 10178 Berlin Deutschland", image: #imageLiteral(resourceName: "alexanderplatz"), telephone:"937462896", website: "http://www.disfrutaberlin.com/alexanderplatz")
+        /*var place = Place(name: "AlexanderPlatz", type: "Plaza", location: "Alexanderstraße 4 10178 Berlin Deutschland", image: #imageLiteral(resourceName: "alexanderplatz"), telephone:"937462896", website: "http://www.disfrutaberlin.com/alexanderplatz")
         places.append(place)
         
         place = Place(name: "Atomium", type: "Museo", location: "Atomiumsquare 1 1020 Bruxelles België", image: #imageLiteral(resourceName: "atomium"), telephone:"937462896", website: "http://www.atomium.be")
@@ -38,7 +38,7 @@ class ViewController: UITableViewController {
         place = Place(name: "Torre de Pisa", type: "Monumento", location: "Torre di Pisa 56126 Pisa Italia", image: #imageLiteral(resourceName: "torrepisa"), telephone:"937462896", website: "http://guias-viajar.com/italia/toscana/subir-torre-pisa-horarios-precios/")
         places.append(place)
         place = Place(name: "La Seu de Mallorca", type: "Catedral", location: "La Seu Plaza de la Seu 5 07001 Palma Baleares, España", image: #imageLiteral(resourceName: "mallorca"), telephone:"902022445", website: "http://www.catedraldemallorca.info/principal/en")
-        places.append(place)
+        places.append(place)*/
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +73,7 @@ class ViewController: UITableViewController {
         // la funcion dequeReusableCell solo muestra lo que cabe por pantalla y gesetiona mejor la memoria
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PlaceCell
         
-        cell.thumbnailImageView.image = place.image
+        cell.thumbnailImageView.image = UIImage(data:place.image as! Data)
         cell.titleLabel.text = place.name
         cell.timeLabel.text = place.type
         cell.ingredientsLabel.text = place.location
@@ -104,7 +104,7 @@ class ViewController: UITableViewController {
             let place = self.places[indexPath.row]
             
             let shareDefautText = "Estoy visitando \(place.name) en la app del Curso de iOS 10."
-            let activityController = UIActivityViewController(activityItems: [shareDefautText,place.image!], applicationActivities: nil)
+            let activityController = UIActivityViewController(activityItems: [shareDefautText,UIImage(data:place.image! as Data)!], applicationActivities: nil)
             self.present(activityController, animated: true, completion: nil)
         }
         shareAction.backgroundColor = UIColor(red: 30.00/255.0, green: 164.0/255.0, blue: 253.0/255.0, alpha: 1.0)
