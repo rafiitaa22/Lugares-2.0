@@ -19,7 +19,7 @@
 		056D90EB1DAD0211007C0CD9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D90EA1DAD0211007C0CD9 /* Place.swift */; };
 		056D90EE1DAD0870007C0CD9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 056D90ED1DAD0870007C0CD9 /* MapKit.framework */; };
 		056D90F01DAD09FC007C0CD9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D90EF1DAD09FC007C0CD9 /* MapViewController.swift */; };
-		056D90F21DAE7398007C0CD9 /* AddPlaceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D90F11DAE7398007C0CD9 /* AddPlaceTableViewController.swift */; };
+		056D90F21DAE7398007C0CD9 /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D90F11DAE7398007C0CD9 /* AddPlaceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,7 @@
 		056D90EA1DAD0211007C0CD9 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		056D90ED1DAD0870007C0CD9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		056D90EF1DAD09FC007C0CD9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		056D90F11DAE7398007C0CD9 /* AddPlaceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceTableViewController.swift; sourceTree = "<group>"; };
+		056D90F11DAE7398007C0CD9 /* AddPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 				056D90E51DAD01E3007C0CD9 /* DetailViewController.swift */,
 				056D90E61DAD01E3007C0CD9 /* PlaceDetailViewCell.swift */,
 				056D90EF1DAD09FC007C0CD9 /* MapViewController.swift */,
-				056D90F11DAE7398007C0CD9 /* AddPlaceTableViewController.swift */,
+				056D90F11DAE7398007C0CD9 /* AddPlaceViewController.swift */,
 				056D90D51DAD0076007C0CD9 /* Assets.xcassets */,
 				056D90D71DAD0076007C0CD9 /* LaunchScreen.storyboard */,
 				056D90DA1DAD0076007C0CD9 /* Info.plist */,
@@ -180,7 +180,7 @@
 				056D90E81DAD01E3007C0CD9 /* DetailViewController.swift in Sources */,
 				056D90CF1DAD0076007C0CD9 /* AppDelegate.swift in Sources */,
 				056D90E91DAD01E3007C0CD9 /* PlaceDetailViewCell.swift in Sources */,
-				056D90F21DAE7398007C0CD9 /* AddPlaceTableViewController.swift in Sources */,
+				056D90F21DAE7398007C0CD9 /* AddPlaceViewController.swift in Sources */,
 				056D90EB1DAD0211007C0CD9 /* Place.swift in Sources */,
 				056D90E31DAD01AA007C0CD9 /* PlaceCell.swift in Sources */,
 				056D90F01DAD09FC007C0CD9 /* MapViewController.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddPlaceTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class AddPlaceViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet var imageView: UIImageView!
     
@@ -23,7 +23,7 @@ class AddPlaceTableViewController: UITableViewController, UIImagePickerControlle
     @IBOutlet var button3: UIButton!
     
     var rating: String?
-    
+    var place: Place?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +46,11 @@ class AddPlaceTableViewController: UITableViewController, UIImagePickerControlle
         
         if let name = self.textfieldName.text, let type = self.textfieldType.text, let direction = self.textfieldDirection.text, let telephone = self.textfieldTelephone.text, let website   = self.textfieldWebsite.text, let theImage = self.imageView.image, let rating = self.rating{
             
-            let place = Place(name: name, type: type, location: direction, image: theImage, telephone: telephone, website: website)
-            place.rating = rating
+            self.place = Place(name: name, type: type, location: direction, image: theImage, telephone: telephone, website: website)
+            place!.rating = rating
             
-            print (place.name)
+            
+            print (place!.name)
             self.performSegue(withIdentifier: "unwindToMainViewController", sender: self)
         }else{
             let alertController = UIAlertController(title: "Falta algún dato", message: "Revisa que lo tengas todo rellenado.", preferredStyle: .alert)
