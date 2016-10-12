@@ -507,7 +507,7 @@
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zYy-DY-Wei">
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3U1-6B-3bz">
+                                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3U1-6B-3bz">
                                                             <color key="backgroundColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="115" id="qbg-K2-rsz"/>
@@ -515,18 +515,27 @@
                                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                                             <color key="tintColor" red="0.97758495219999997" green="0.9769698752" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" title="No me gusta"/>
+                                                            <connections>
+                                                                <action selector="ratingPressed:" destination="ocb-L8-ZRd" eventType="touchUpInside" id="Jgr-YA-Cb2"/>
+                                                            </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWk-r2-PdM">
+                                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWk-r2-PdM">
                                                             <color key="backgroundColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                                             <color key="tintColor" red="0.97758495219999997" green="0.9769698752" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" title="Me gusta"/>
+                                                            <connections>
+                                                                <action selector="ratingPressed:" destination="ocb-L8-ZRd" eventType="touchUpInside" id="eJO-TK-vAS"/>
+                                                            </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnd-vy-NeX">
+                                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnd-vy-NeX">
                                                             <color key="backgroundColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                                             <color key="tintColor" red="0.97758495219999997" green="0.9769698752" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" title="Me encanta"/>
+                                                            <connections>
+                                                                <action selector="ratingPressed:" destination="ocb-L8-ZRd" eventType="touchUpInside" id="nZe-Ma-mBK"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -551,15 +560,26 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="txE-z3-pZb">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="ZU5-ve-7Fa" kind="unwind" unwindAction="unwindToMainViewControllerWithSegue:" id="g6V-Nv-YAV"/>
+                                <segue destination="ZU5-ve-7Fa" kind="unwind" identifier="unwindToMainViewController" unwindAction="unwindToMainViewControllerWithSegue:" id="g6V-Nv-YAV"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="LRv-Nh-Eat">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="savePressed:" destination="ocb-L8-ZRd" id="HgT-RS-vuc"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="button1" destination="3U1-6B-3bz" id="PaB-YK-B3w"/>
+                        <outlet property="button2" destination="vWk-r2-PdM" id="DWf-8F-Oiy"/>
+                        <outlet property="button3" destination="cnd-vy-NeX" id="d61-Wp-m4u"/>
                         <outlet property="imageView" destination="ewR-eq-yxf" id="8IX-x8-xoC"/>
+                        <outlet property="textfieldDirection" destination="J7I-CX-dv8" id="Fur-hm-PL9"/>
+                        <outlet property="textfieldName" destination="nAk-xo-YUL" id="LJn-zO-psx"/>
+                        <outlet property="textfieldTelephone" destination="q5u-rL-nAy" id="ULG-1C-22X"/>
+                        <outlet property="textfieldType" destination="HvF-18-st5" id="Pka-2h-dTN"/>
+                        <outlet property="textfieldWebsite" destination="wEb-JI-zof" id="mmJ-k3-VPs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9L-3P-AlZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
