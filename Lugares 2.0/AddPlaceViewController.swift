@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddPlaceViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
@@ -44,22 +45,40 @@ class AddPlaceViewController: UITableViewController, UIImagePickerControllerDele
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         
-       /* if let name = self.textfieldName.text, let type = self.textfieldType.text, let direction = self.textfieldDirection.text, let telephone = self.textfieldTelephone.text, let website   = self.textfieldWebsite.text, let theImage = self.imageView.image, let rating = self.rating{
+        if let name = self.textfieldName.text, let type = self.textfieldType.text, let direction = self.textfieldDirection.text, let telephone = self.textfieldTelephone.text, let website   = self.textfieldWebsite.text, let theImage = self.imageView.image, let rating = self.rating {
             
-            self.place = Place(name: name, type: type, location: direction, image: theImage, telephone: telephone, website: website)
-            place!.rating = rating
-            
+            if let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer{
+                let context = container.viewContext
+                self.place = NSEntityDescription.insertNewObject(forEntityName: "Place", into: context) as? Place
+                
+                self.place?.name = name
+                self.place?.type = type
+                self.place?.location = direction
+                self.place?.telephone = telephone
+                self.place?.website = website
+                self.place?.rating = rating
+                self.place?.image = UIImagePNGRepresentation(theImage) as NSData!
+                
+                do{
+                    try context.save()
+                }catch{
+                    print("Ha habido un error al guardar en CD")
+                }
+                
+                
+                
+            }
             
             print (place!.name)
-            
+            self.performSegue(withIdentifier: "unwindToMainViewController", sender: self)
          
         }else{
             let alertController = UIAlertController(title: "Falta algún dato", message: "Revisa que lo tengas todo rellenado.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
-        }*/
-        self.performSegue(withIdentifier: "unwindToMainViewController", sender: self)
+        }
+       
     }
     
     @IBAction func ratingPressed(_ sender: AnyObject) {

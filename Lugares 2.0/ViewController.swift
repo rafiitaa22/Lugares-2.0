@@ -7,38 +7,40 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UITableViewController {
     
     var places : [Place] = []
+    var fetchResultsController : NSFetchedResultsController<Place>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // solo aparece el boton hacia atras sin texto
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        //mejorar la gestión de recarga de datos en la tabla
+        let fetchRequest : NSFetchRequest<Place> = NSFetchRequest(entityName: "Place")
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         
+        if let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer{
+            let context = container.viewContext
+            self.fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            self.fetchResultsController.delegate = self
+            do{
+                try fetchResultsController.performFetch()
+                self.places = fetchResultsController.fetchedObjects!
+                
+            }catch{
+                print("Error al recuperar los lugares")
+            }
+        }
+        
+
         // elimina las rows vacias de abajo cuando acaba la lista
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         // Do any additional setup after loading the view, typically from a nib.
-        /*var place = Place(name: "AlexanderPlatz", type: "Plaza", location: "Alexanderstraße 4 10178 Berlin Deutschland", image: #imageLiteral(resourceName: "alexanderplatz"), telephone:"937462896", website: "http://www.disfrutaberlin.com/alexanderplatz")
-        places.append(place)
-        
-        place = Place(name: "Atomium", type: "Museo", location: "Atomiumsquare 1 1020 Bruxelles België", image: #imageLiteral(resourceName: "atomium"), telephone:"937462896", website: "http://www.atomium.be")
-        places.append(place)
-        
-        place = Place(name: "Big Ben", type: "Monumento", location: "London SW1A 0AA England", image: #imageLiteral(resourceName: "bigben"),telephone:"937462896", website: "http://www.parliament.uk/bigben")
-        places.append(place)
-        place = Place(name: "Cristo Redentor", type: "Monumento", location: "Cristo Redentor João Pessoa - PB Brasil", image: #imageLiteral(resourceName: "cristoredentor"), telephone:"937462896", website: "https://cristoredentoroficial.com.br")
-        places.append(place)
-        place = Place(name: "Torre Eiffel", type: "Monumento", location: "5 Avenue Anatole France 75007 Paris France", image: #imageLiteral(resourceName: "torreeiffel"), telephone:"937462896", website: "http://www.toureiffel.paris/es.html")
-        places.append(place)
-        place = Place(name: "Gran Muralla China", type: "Monumento", location: "慕田峪长城 中国北京市", image: #imageLiteral(resourceName: "murallachina"), telephone:"937462896", website: "http://www.nationalgeographic.com.es/historia/grandes-reportajes/la-gran-muralla-china_8272")
-        places.append(place)
-        place = Place(name: "Torre de Pisa", type: "Monumento", location: "Torre di Pisa 56126 Pisa Italia", image: #imageLiteral(resourceName: "torrepisa"), telephone:"937462896", website: "http://guias-viajar.com/italia/toscana/subir-torre-pisa-horarios-precios/")
-        places.append(place)
-        place = Place(name: "La Seu de Mallorca", type: "Catedral", location: "La Seu Plaza de la Seu 5 07001 Palma Baleares, España", image: #imageLiteral(resourceName: "mallorca"), telephone:"902022445", website: "http://www.catedraldemallorca.info/principal/en")
-        places.append(place)*/
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -111,9 +113,19 @@ class ViewController: UITableViewController {
         // se debe añadir de nuevo la accion de eliminar porque esta la sobreescribe
         
         let deleteAction =  UITableViewRowAction(style: .default, title: "Eliminar") { (accion, indexPath) in
-            
-            self.places.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            if let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer{
+                let context = container.viewContext
+                let placeToDelete = self.fetchResultsController.object(at: indexPath)
+                context.delete(placeToDelete)
+                do{
+                    try context.save()
+                }catch{
+                    print("Error al guardar")
+                }
+            }
+           /*Sin coredata estaba bien borrar así
+             self.places.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)*/
         }
         deleteAction.backgroundColor = UIColor(red: 202/255.0, green: 202.0/255.0, blue: 202.0/255.0, alpha: 1.0)
         
@@ -143,10 +155,11 @@ class ViewController: UITableViewController {
     
     @IBAction func unwindToMainViewController(segue:UIStoryboardSegue){
         if segue.identifier == "unwindToMainViewController" {
-            if let addplaceVC = segue.source as? AddPlaceViewController {
+            if let addplaceVC = segue.source as? AddPlaceViewController
+            {
                 if let newPlace = addplaceVC.place{
                     self.places.append(newPlace)
-                    self.tableView.reloadData()
+                    //self.tableView.reloadData()
                 }
             }
         }
@@ -155,7 +168,47 @@ class ViewController: UITableViewController {
     
     
     
+    
+    
 }
 
+extension ViewController : NSFetchedResultsControllerDelegate{
+    
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+        
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath{
+                self.tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+        case .delete:
+            if let indexPath = indexPath{
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        case .update:
+            if let indexPath = indexPath{
+                self.tableView.reloadRows(at: [indexPath], with: .fade)
+            }
+        case .move:
+            if let indexPath = indexPath , let newIndexPath = newIndexPath{
+                self.tableView.moveRow(at: indexPath, to: newIndexPath)
+            }
+
+        
+        }
+        self.places = controller.fetchedObjects as! [Place]
+    }
+    
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+    
+}
 
 
